@@ -17,6 +17,21 @@
   </div>
   
   <div class="field">
+	<%= f.label :profile_image %><br/>
+	<%= f.file_field :profile_image %>
+  </div>
+  
+  <div class="field">
+	<%= f.label :profile_fg %><br/>
+	<%= f.text_field :profile_fg %>
+  </div>
+
+  <div class="field">
+	<%= f.label :profile_bg %><br/>
+	<%= f.text_field :profile_bg %>
+  </div>
+  
+  <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>

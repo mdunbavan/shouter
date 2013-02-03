@@ -10,4 +10,10 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
     end
   end
+  
+  # migrate the users data and add the constant default objects with values
+  def change
+    add_column :profile_bg => "fff", :profile_fg => "000", :profile_image
+  end
+  
 end
