@@ -5,6 +5,13 @@
 <b>Username:</b>
 <p><%= @user.username%></p>
 
+<b>User image:</b>
+<% if @user.has_image? %>
+<%= image_tag @user.image_uri %>
+<% else %>
+No image available
+<% end %>
+
 <b>User ID:</b>
 <p><%= @user.id%></p>
 

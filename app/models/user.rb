@@ -5,19 +5,11 @@ class User < ActiveRecord::Base
   	attr_accessible :username
 	attr_accessible :username, :password, :email
 	attr_accessible :profile_bg, :profile_fg, :profile_image
-	attr_accessible :profile_image_file
+ 	attr_accessible :profile_image_file
 	validates_presence_of :username, :email, :password
 	validates_uniqueness_of :email, :username, :case_sensitive => false
 	validates_presence_of :password, :on => "create"
 	validates_format_of :email, :with => /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]+\z/i
-	
-# 	validates_presence_of :username, :if => :username_is_prohibited_for_use?
-# 
-# 	def username_is_prohibited_for_use?
-#   		:username == "kyle" || :username == "admin" || :username == "leo"
-#   		
-#   		errors.add(:username, "must not use these current admin roles")
-# 	end
 	
 	validate :username_is_prohibited_for_use?
 
@@ -26,5 +18,40 @@ class User < ActiveRecord::Base
       errors.add(:username, "must not use these current admin roles")
     end
   end
+  
+  after_save :store_image
+  IMAGE_STORE = "#{Rails.root}/public"
+  def image_filename
+	return "#{IMAGE_STORE}/#{id}.#{image_type}"
+  end
+  
+	def image_uri
+		return "/#{id}.#{image_type}"
+	end
+	
+# define method to determine if a review has an image on the
+# file system at the location specified by image_filename
+	def has_image?
+		return File.exists? image_filename
+	end
+  
+  # after saving other date, store image on file system
+# mark store_image method private
+	private
+	
+		def store_image
+		if @file_data
+			# create directory at IMAGE_STORE if it does not exist
+			FileUtils.mkdir_p IMAGE_STORE
+			# save image to file location and name from image_filename method
+			File.open(image_filename, 'wb') do |f|
+			f.write(@file_data.read)
+		end
+		# nil file_data in memory so it won't be resaved
+		@file_data = nil
+		end
+		end
+  
+  
 	
 end
