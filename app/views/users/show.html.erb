@@ -2,24 +2,34 @@
 
 <h1>Users listings with id's and attributes</h1>
 
+<div id="user_container" style="background:#<%= @user.profile_fg%>;">
 <b>Username:</b>
-<p><%= @user.username%></p>
+<u><%= @user.username.html_safe %></u>
 
 <b>User image:</b>
+<p>
+<b>Image:</b>
 <% if @user.has_image? %>
 <%= image_tag @user.image_uri %>
 <% else %>
 No image available
 <% end %>
+</p>
 
 <b>User ID:</b>
 <p><%= @user.id%></p>
 
+<% for shout in @user.shouts %>
+  <%= shout.content %>
+  <p>posted <%= time_ago_in_words(shout.created_at) %> ago</p>
+<% end %>
+
 <b>Email:</b>
 <p><%= @user.email%></p>
 
-<b>Password:</b>
-<p><%= @user.password%></p>
+<%= will_paginate @shouts, :style => 'color:blue' %>
+
+</div> <!-- end user_container -->
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

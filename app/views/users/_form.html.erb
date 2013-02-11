@@ -1,3 +1,4 @@
+<div id="form">
 <%= form_for(@user, :html => { :multipart => true }) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -46,3 +47,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+</div>

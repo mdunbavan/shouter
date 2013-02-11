@@ -13,6 +13,7 @@
   <tr>
     <td><%= shout.content %></td>
     <td><%= shout.user_id %></td>
+    <td>posted <%= time_ago_in_words(shout.created_at) %> ago</td>
     <td><%= link_to 'Show', shout %></td>
     <td><%= link_to 'Edit', edit_shout_path(shout) %></td>
     <td><%= link_to 'Destroy', shout, method: :delete, data: { confirm: 'Are you sure?' } %></td>

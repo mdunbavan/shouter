@@ -8,6 +8,8 @@ gem 'rails', '3.2.11'
 gem 'sqlite3'
 gem 'validates_existence'
 gem 'will_paginate'
+gem "therubyracer"
+gem "twitter-bootstrap-rails"
 
 
 # Gems used only for assets and not required

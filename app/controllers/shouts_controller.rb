@@ -4,7 +4,7 @@ class ShoutsController < ApplicationController
   def index
     @shouts = Shout.all
     @shouts = Shout.order("created_at DESC")
-    @shouts = Shout.paginate(:page => params[:page], :per_page => 1)
+    @shouts = Shout.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,6 +27,7 @@ class ShoutsController < ApplicationController
   # GET /shouts/new.json
   def new
     @shout = Shout.new
+    @user = User.all
 
     respond_to do |format|
       format.html # new.html.erb
