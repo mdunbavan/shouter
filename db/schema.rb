@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130210154316) do
+ActiveRecord::Schema.define(:version => 20130214194600) do
+
+  create_table "follows", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "follow_id",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "shouts", :force => true do |t|
     t.text     "content"
@@ -23,12 +30,12 @@ ActiveRecord::Schema.define(:version => 20130210154316) do
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "username"
-    t.string   "password"
+    t.string   "password_digest"
     t.string   "profile_bg"
     t.string   "profile_fg"
     t.string   "profile_image"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "image_type"
   end
 

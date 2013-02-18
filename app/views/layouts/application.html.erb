@@ -8,6 +8,7 @@
 </head>
 <body>
 <%= render 'navigation' %>
+<%= "Hello " + current_user.username if logged_in? %>
 <%= yield %>
 
 </body>

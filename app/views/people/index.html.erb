@@ -1,0 +1,13 @@
+<h2>Who is online at the moment?</h2>
+<%= form_tag :action => 'index' do %>
+<p>What goes on the list?</p>
+<%= text_field_tag 'item' %>
+<%= submit_tag 'Add item' %>
+<% end %>
+<% if @items %>
+<ol>
+<% @items.each do |item| %>
+<li><%= item %></li>
+<% end %>
+</ol>
+<% end %>

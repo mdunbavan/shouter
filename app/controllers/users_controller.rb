@@ -1,4 +1,37 @@
 class UsersController < ApplicationController
+
+
+
+def follow
+:require_user
+    @user_id = current_user.id
+    @follow_id = params[:follow_id]
+    @followed_user = User.find(params[:follow_id])
+
+    
+    if !@user_id.blank? || !@follow_id.blank? then
+      
+      Follow.create( :user_id => @user_id, :follow_id => @follow_id)
+      flash.now[:notice] = "You're now following <%= @follow_id %>."
+            redirect_to '/' + @followed_user.username
+
+    end  
+  end
+  
+ def unfollow
+:require_user
+    @followed_user = User.find(params[:follow_id])
+    
+    @follow = Follow.where(:user_id => current_user.id, :follow_id => params[:follow_id]).first
+    @follow.destroy
+    flash.now[:notice] = "You have unfollowed <%= @follow_id %>."
+
+    redirect_to '/' + @followed_user.username
+
+  end
+  
+ 
+
   # GET /users
   # GET /users.json
   def index
@@ -42,6 +75,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
+    session[:user_id] = @user.id
 
     respond_to do |format|
       if @user.save

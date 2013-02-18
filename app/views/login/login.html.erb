@@ -1,0 +1,9 @@
+<h2>Hello <%= @name %></h2>
+<%= form_tag :action => 'login' do %>
+<p>What is your name?</p>
+<%= text_field_tag 'input_name', @name %>
+<%= submit_tag 'Log In' %>
+<% end %>
+<% unless @previous_name.blank? %>
+<p>Last time your name was: <%= @previous_name %></p>
+<% end %>

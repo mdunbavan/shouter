@@ -1,4 +1,5 @@
 class ShoutsController < ApplicationController
+
   # GET /shouts
   # GET /shouts.json
   def index
