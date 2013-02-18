@@ -1,6 +1,10 @@
+<nav>   
+      <%= link_to 'Newsfeed', shouts_path if logged_in?  %>
+      <%= link_to 'Users', users_path if logged_in?  %>
+</nav>
 <p>
 <%= link_to 'Shouts', shouts_path %>
 <%= link_to 'Users', users_path %>
 <%= link_to 'Log Out', '/sessions/destroy', {:method=>:delete} if logged_in? %>
-<%= link_to 'Register', new_user_path unless logged_in? %>
+<%= link_to 'Register', register_path unless logged_in? %>
 </p>

@@ -1,4 +1,6 @@
 Shouter::Application.routes.draw do
+  get "register/index"
+
   get "sessions/new", :as => :log_in
 
   post "sessions/create"
@@ -11,7 +13,6 @@ Shouter::Application.routes.draw do
 
   resources :shouts
 
-
 	resources :users
 	resources :follows
 	resources :shouts
@@ -21,6 +22,8 @@ Shouter::Application.routes.draw do
             get 'shouts'
       end
 	end
+	
+	match '/register',  :controller => 'register',   :action => 'index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
