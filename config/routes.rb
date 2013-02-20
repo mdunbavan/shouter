@@ -1,15 +1,16 @@
 Shouter::Application.routes.draw do
-  get "register/index"
+
+#Log In Page
+  root :to => 'sessions#index'
+  
+  get "login/index"
 
   get "sessions/new", :as => :log_in
+  
+  #get     "sessions/new", :as => :log_in
+  post    "sessions/create"
+  delete  "sessions/destroy"
 
-  post "sessions/create"
-
-  delete "sessions/destroy"
-
-  get "people/index"
-
-  get "login/login"
 
   resources :shouts
 
@@ -23,7 +24,7 @@ Shouter::Application.routes.draw do
       end
 	end
 	
-	match '/register',  :controller => 'register',   :action => 'index'
+# 	match '/sessions',  :controller => 'register',   :action => 'index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -74,7 +75,7 @@ Shouter::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'users'
+  # root :to => 'shouts'
 
   # See how all your routes lay out with "rake routes"
 

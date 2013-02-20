@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-
-
 def follow
 :require_user
     @user_id = current_user.id

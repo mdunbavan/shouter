@@ -1,4 +1,5 @@
 class ShoutsController < ApplicationController
+before_filter :require_user, :only => [:new, :create]
 
   # GET /shouts
   # GET /shouts.json
@@ -55,6 +56,10 @@ class ShoutsController < ApplicationController
         format.json { render json: @shout.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def authorize
+    redirect_to(:notice => "You must be signed in") unless signed_in?
   end
 
   # PUT /shouts/1

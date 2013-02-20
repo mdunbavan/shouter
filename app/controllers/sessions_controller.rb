@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
-
-	def index
+  # GET /sessions
+  # GET /sessions.json
+  def index
     if logged_in?
       redirect_to :controller=>'shouts', :action => 'index'
     else
@@ -8,24 +9,26 @@ class SessionsController < ApplicationController
     end
   end
 
+  # GET /sessions/new
+  # GET /sessions/new.json
   def new
     if logged_in?
     redirect_to :controller=>'shouts', :action => 'index'
     end
   end
 
+  # POST /sessions
+  # POST /sessions.json
   def create
-	if user = User.find_by_email(params[:email]).try(:authenticate, params[:password])
+    if user = User.find_by_username(@username).try(:authenticate, params[:password])
 	session[:user_id] = user.id
-	redirect_to shouts_path
-	else
-	flash.now[:notice] = "Username and password didn't match."
-	render 'new'
 	end
   end
 
+  # DELETE /sessions/1
+  # DELETE /sessions/1.json
   def destroy
-  	reset_session
-	redirect_to log_in_path
+    reset_session
+    redirect_to root_path
   end
 end

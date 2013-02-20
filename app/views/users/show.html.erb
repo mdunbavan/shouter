@@ -1,8 +1,12 @@
+<style>
+body {background-color:<%= @user.profile_bg %> !important;}
+#main a, #main a:link, #main a:hover, #main a:visited, #main a:active {color:<%= @user.profile_fg %> !important;}
+</style>
 <p id="notice"><%= notice %></p>
 
 <h1>Users listings with id's and attributes</h1>
 
-<div id="user_container" style="background:#<%= @user.profile_fg%>;">
+<div id="user_container" style="background:#<%= @user.profile_bg%>;">
 <b>Username:</b>
 <u><%= @user.username.html_safe %></u>
 
@@ -26,6 +30,9 @@ No image available
 
 <b>Email:</b>
 <p><%= @user.email%></p>
+
+<b>Follow User:</b>
+
 
 <%= will_paginate @shouts, :style => 'color:blue' %>
 

@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
 	has_many :shouts, :dependent => :destroy, :foreign_key => :user_id
-	has_many :follows, :dependent => :destroy
+ 	has_many :follows, :dependent => :destroy
+ 	has_many :reverse_follows, :foreign_key => :follow_id, :class_name => "Follow"
   # attr_accessible :title, :body
   	attr_accessible :username
-	attr_accessible :username, :password, :email
+	attr_accessible :username, :password, :password_confirmation, :email
 	attr_accessible :profile_bg, :profile_fg, :profile_image
  	attr_accessible :profile_image_file
 	validates_presence_of :username, :email, :password
@@ -16,6 +17,14 @@ class User < ActiveRecord::Base
 	has_secure_password
 	
 	validate :username_is_prohibited_for_use?
+	
+	validate :does_password_match?, :on => :edit
+	
+	def does_password_match?
+		if :password != :password_confirmation
+			errors.add(:username, "Your password does not match")
+		end
+	end
 
   def username_is_prohibited_for_use?
     if :username == "kyle" || :username == "admin" || :username == "leo"
