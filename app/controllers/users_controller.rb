@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-def follow
+  def follow
 :require_user
     @user_id = current_user.id
     @follow_id = params[:follow_id]
@@ -15,8 +15,7 @@ def follow
 
     end  
   end
-  
- def unfollow
+  def unfollow
 :require_user
     @followed_user = User.find(params[:follow_id])
     
@@ -26,6 +25,52 @@ def follow
 
     redirect_to '/' + @followed_user.username
 
+  end
+  def following
+:require_user
+   @user = User.find_by_username(params[:username])
+
+    #Array to save all of the follow information
+    @following_users = Array.new
+    
+    #Extracting the follow_ids out of this array
+    @user.follows.each do |i|
+      @following_users.push i.follow_id
+    end
+    
+    #getting the users whose follow id is the same as the follow_id
+    @following = User.find_all_by_id(@following_users)
+
+    @shouts = Shout.order('created_at desc').paginate(:page => params[:page], :per_page => 20)
+    
+    respond_to do |format|
+      format.html # profile.html.erb
+      
+    end
+
+  end
+  def followers
+:require_user
+   @user = User.find_by_username(params[:username])
+
+    #Array to save all of the follow information
+    @following_users = Array.new
+    
+    #Extracting the follow_ids out of this array
+    @user.reverse_follows.each do |i|
+      @following_users.push i.follow_id
+    end
+    
+    #getting the users whose follow id is the same as the follow_id
+    @followers = User.find_all_by_id(@following_users)
+
+    @shouts = Shout.order('created_at desc').paginate(:page => params[:page], :per_page => 20)
+    
+    respond_to do |format|
+      format.html # profile.html.erb
+      
+    end
+    
   end
   
  
@@ -73,7 +118,12 @@ def follow
   # POST /users.json
   def create
     @user = User.new(params[:user])
-    session[:user_id] = @user.id
+    if @user.save
+		session[:user_id] = @user.id
+		redirect_to shouts_path
+	else
+		render 'new'
+	end
 
     respond_to do |format|
       if @user.save

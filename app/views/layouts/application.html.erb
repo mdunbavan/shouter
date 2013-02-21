@@ -9,7 +9,7 @@
 <body>
 <%= render 'navigation' %>
 <% if logged_in? %>
-  Welcome <%=current_user.email %> | <%= link_to "Sign Out", sign_out_path, :method => :delete %>
+  Welcome <%=current_user.username %>
 <%else %>
 
 <% end %>

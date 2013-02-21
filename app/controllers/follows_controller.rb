@@ -1,4 +1,7 @@
 class FollowsController < ApplicationController
+
+  :user_id
+  :follow_id
   # GET /follows
   # GET /follows.json
   def index

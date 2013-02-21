@@ -1,4 +1,7 @@
 class LoginController < ApplicationController
-  def index
-  end
+  def login
+@previous_memory_name = cookies[:stored_name]
+@memory_name = params[:input_name]
+cookies[:stored_name] = @memory_name
+end
 end

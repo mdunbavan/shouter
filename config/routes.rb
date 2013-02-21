@@ -1,16 +1,13 @@
 Shouter::Application.routes.draw do
 
-#Log In Page
-  root :to => 'sessions#index'
-  
-  get "login/index"
 
   get "sessions/new", :as => :log_in
-  
-  #get     "sessions/new", :as => :log_in
-  post    "sessions/create"
-  delete  "sessions/destroy"
 
+  post "sessions/create"
+
+  delete "sessions/destroy"
+
+  get "login/login"
 
   resources :shouts
 
@@ -23,6 +20,11 @@ Shouter::Application.routes.draw do
             get 'shouts'
       end
 	end
+	
+	match '/(:username)',           :controller => 'users',   :action => 'profile'
+  match '/(:username)/following', :controller => 'users',   :action => 'following'
+  match '/(:username)/followers', :controller => 'users',   :action => 'followers'
+
 	
 # 	match '/sessions',  :controller => 'register',   :action => 'index'
 
