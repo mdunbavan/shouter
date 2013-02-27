@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
 	validates_uniqueness_of :email, :username, :case_sensitive => false
 	validates_presence_of :password, :on => "create"
 	validates_format_of :email, :with => /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]+\z/i
-	has_and_belongs_to_many :follows
 	has_secure_password
 	
 	validate :username_is_prohibited_for_use?
@@ -55,6 +54,9 @@ end
 		return File.exists? image_filename
 	end
 	
+  def to_param
+  	username
+  	end
   
   # after saving other date, store image on file system
 # mark store_image method private

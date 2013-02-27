@@ -28,13 +28,25 @@ No image available
   <p>posted <%= time_ago_in_words(shout.created_at) %> ago</p>
 <% end %>
 
+<%= will_paginate @shouts, :style => 'color:blue' %>
+
 <b>Email:</b>
 <p><%= @user.email%></p>
 
 <b>Follow User:</b>
 
+<% if @already_following %>
+  <%= render "unfollow_form" %>
+<% else %>
+  <%= render "follow_form" %>
+<% end %>
 
-<%= will_paginate @shouts, :style => 'color:blue' %>
+
+<h3><%= @user.username %> is being followed by</h3>
+
+
+<h3><%= @user.username %> is following</h3>
+
 
 </div> <!-- end user_container -->
 

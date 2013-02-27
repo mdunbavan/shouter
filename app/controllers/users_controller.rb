@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def follow
-:require_user
+	:require_user
     @user_id = current_user.id
     @follow_id = params[:follow_id]
     @followed_user = User.find(params[:follow_id])
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
       
       Follow.create( :user_id => @user_id, :follow_id => @follow_id)
       flash.now[:notice] = "You're now following <%= @follow_id %>."
-            redirect_to '/' + @followed_user.username
+            redirect_to @followed_user
 
     end  
   end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     @follow.destroy
     flash.now[:notice] = "You have unfollowed <%= @follow_id %>."
 
-    redirect_to '/' + @followed_user.username
+    redirect_to @followed_user
 
   end
   def following
@@ -89,8 +89,39 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by_username(params[:id])
+    
+    #Array to save all of the follow information
+    @following_users = Array.new
+    
+    #Extracting the follow_ids out of this array
+    @user.follows.each do |i|
+      @following_users.push i.follow_id
+    end
+    
+    #getting the users whose follow id is the same as the follow_id
+    @followed_users = User.find_all_by_id(@following_users)
+
+    #Array of Followers
+    @followers = Array.new
+    
+    #Extracting the follow_ids out of the reverse_followers array
+    @user.reverse_follows.each do |i|
+      @followers.push i.follow_id
+    end
+    
     @shouts = Shout.order('created_at desc').paginate(:page => params[:page], :per_page => 4)
+
+    if current_user
+    	@already_following = false
+    	current_user.follows.each do |follow|
+    		if follow.follow == @user
+    			@already_following = true
+    			break
+    		end
+    	end
+    	
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -124,16 +155,6 @@ class UsersController < ApplicationController
 	else
 		render 'new'
 	end
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PUT /users/1

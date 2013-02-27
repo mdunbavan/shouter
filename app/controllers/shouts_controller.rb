@@ -47,6 +47,10 @@ before_filter :require_user, :only => [:new, :create]
   def create
     @shout = Shout.new(params[:shout])
 
+#   params[:tags].split(" ").each do |tag_word|
+# 	  @shout.tags.build(:tag_word => tag_word)
+# 	end
+	
     respond_to do |format|
       if @shout.save
         format.html { redirect_to @shout, notice: 'Shout was successfully created.' }

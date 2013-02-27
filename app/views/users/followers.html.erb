@@ -1,0 +1,9 @@
+<h1><%= @user.username %> is being followed by</h1>
+<% @followers.each do |user| %>
+
+    <%= user.email %><br/>
+    <%= user.username %><br/>
+    <%= link_to_profile(user.username) %><br/>
+   
+  <hr/>
+<% end %>

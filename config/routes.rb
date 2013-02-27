@@ -1,6 +1,5 @@
 Shouter::Application.routes.draw do
 
-
   get "sessions/new", :as => :log_in
 
   post "sessions/create"
@@ -21,7 +20,7 @@ Shouter::Application.routes.draw do
       end
 	end
 	
-	match '/(:username)',           :controller => 'users',   :action => 'profile'
+ 	match '/(:username)',           :controller => 'users',   :action => 'profile'
   match '/(:username)/following', :controller => 'users',   :action => 'following'
   match '/(:username)/followers', :controller => 'users',   :action => 'followers'
 
